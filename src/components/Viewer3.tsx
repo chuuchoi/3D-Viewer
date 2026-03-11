@@ -1,20 +1,20 @@
+import React from "react"
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
-
 import { createRenderer } from "../three/renderer"
 import { createScene } from "../three/scene"
 import { createCamera } from "../three/camera"
 import { createLights } from "../three/light"
-import React from "react"
+import { createBoxesWithBVH } from "../three/modelLoader"
 
-export default function Viewer() {
+export default function Viewer3() {
+
   const containerRef = useRef<HTMLDivElement>(null)
   const hoveredRef = useRef<THREE.Mesh | null>(null)
   const raycaster = new THREE.Raycaster()
   const mouse = new THREE.Vector2()
-  const meshes: THREE.Mesh[]= []
+
 
   useEffect(() => {
 
@@ -41,53 +41,29 @@ export default function Viewer() {
     }
     controls.enableDamping = true
 
-    const loader = new GLTFLoader()
-    loader.load(
-      "/untitled.glb",
-      (gltf) => {
-        // scene.add(gltf.scene)
-        console.log(gltf.scene)
 
-        gltf.scene.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            meshes.push(child)
-            console.log(child)
-            scene.add(child)
-          }
-        })
-      },
-      undefined,
-      (error) => {
-        console.error("Error loading model:", error)
-      }
-    )
+    const boxes = createBoxesWithBVH(scene)
 
-    let f = true
+
     function animate() {
       requestAnimationFrame(animate)
       controls.update()
 
-raycaster.setFromCamera(mouse, camera)
+      raycaster.setFromCamera(mouse, camera)
 
-const intersects = raycaster.intersectObject(scene, true)
-// if(meshes.length>0){ (meshes[2].material as THREE.MeshStandardMaterial).color.set("blue")
-// if(f) console.log(meshes)
-//   f= false}
+      const intersects = raycaster.intersectObjects(boxes)
 
-// if (hoveredRef.current) {
-//   (hoveredRef.current.material as THREE.MeshStandardMaterial).color.set("orange")
-//   hoveredRef.current = null
-// }
+      if (hoveredRef.current) {
+        (hoveredRef.current.material as THREE.MeshStandardMaterial).color.set("blue")
+        hoveredRef.current = null
+      }
 
-// if (intersects.length > 0) {
+      if (intersects.length > 0) {
 
-//   hoveredRef.current = intersects[0].object as THREE.Mesh
+        hoveredRef.current = intersects[0].object as THREE.Mesh
 
-//   ;(hoveredRef.current.material as THREE.MeshStandardMaterial).color.set("hotpink")
-// }
-
-
-
+        ;(hoveredRef.current.material as THREE.MeshStandardMaterial).color.set("hotpink")
+      }
 
       renderer.render(scene, camera)
     }
