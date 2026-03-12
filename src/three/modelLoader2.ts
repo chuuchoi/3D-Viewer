@@ -82,7 +82,9 @@ export function createInstancedCubes() {
 // 이 상황에서 사용하는 방법은 4가지입니다.
 // 방법 1️⃣ Geometry Merge
 // 가장 많이 사용하는 방법입니다.
-export function createGeometryMergeCubes(scene: THREE.Scene) {
+export function createGeometryMergeCubes(
+  // scene: THREE.Scene
+) {
   const geometries = []
 
 for (let i = 0; i < 1000; i++) {

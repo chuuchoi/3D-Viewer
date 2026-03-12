@@ -20,7 +20,6 @@ export default function Viewer({style}:{style?:React.CSSProperties}) {
   const mouseRef = useRef(new THREE.Vector2(-99, -99)) // 화면 바깥으로 초기화
   const mouse = mouseRef.current
   const updateMouse = useRafThrottle(setMouseP)
-  const updateHovered = useRafThrottle(setHovered)
 
   useEffect(() => {
     console.log('Viewer mount')

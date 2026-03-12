@@ -1,19 +1,16 @@
 import React, { useState } from "react"
 import { useEffect, useRef } from "react"
-import * as THREE from "three"
 
 import { createRenderer } from "../three/renderer"
 import { createScene } from "../three/scene"
 import { createCamera } from "../three/camera"
 import { createLights } from "../three/light"
-import { createTestMesh, createInstancedCubes, createManyMeshes, createLOD } from "../three/modelLoader2"
+import { createLOD } from "../three/modelLoader2"
 
 export default function Viewer2({style}:{style?:React.CSSProperties}) {
   const [currentLevel, setCurrentLevel] =useState<number | undefined>()
   const containerRef = useRef<HTMLDivElement>(null)
   const rafId = useRef<number>(null)
-  let isForward = true
-
 
   useEffect(() => {
 
@@ -40,29 +37,6 @@ export default function Viewer2({style}:{style?:React.CSSProperties}) {
     const meshLOD = createLOD()
     scene.add(meshLOD)
 
-    function animate() {
-      requestAnimationFrame(animate)
-
-      // mesh.rotation.x += 0.01
-      // mesh.rotation.z += 0.01
-      camera.rotation.z += 0.02
-      
-      // camera 앞 뒤로 왔다갔다
-      if (isForward) {
-        camera.position.z += 0.1
-        if (camera.position.z >= 10) {
-          isForward = false
-        }
-      } else {
-        camera.position.z -= 0.1
-        if (camera.position.z <= 1) {
-          isForward = true
-        }
-      }
-
-
-      renderer.render(scene, camera)
-    }
     let lastUpdate = 0;
     function animateLOD() {
       rafId.current = requestAnimationFrame(animateLOD)

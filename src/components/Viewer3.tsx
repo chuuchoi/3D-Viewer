@@ -6,14 +6,11 @@ import { createRenderer } from "../three/renderer"
 import { createScene } from "../three/scene"
 import { createCamera } from "../three/camera"
 import { createLights } from "../three/light"
-import { createBoxesWithBVH, createBoxesWithInstancedBVH } from "../three/modelLoader"
+import { createBoxesWithInstancedBVH } from "../three/modelLoader"
 
 export default function Viewer3({style}:{style?:React.CSSProperties}) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const hoveredRef = useRef<THREE.Mesh | null>(null)
-  let hovered = hoveredRef.current
   const hoveredInstaceIdRef = useRef<number | undefined>(undefined)
-  let instanceId = hoveredInstaceIdRef.current
   const raycasterRef = useRef(new THREE.Raycaster())
   const raycaster = raycasterRef.current
   const mouseRef = useRef(new THREE.Vector2(-99,-99))
