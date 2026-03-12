@@ -6,14 +6,12 @@ import { createRenderer } from "../three/renderer"
 import { createScene } from "../three/scene"
 import { createCamera } from "../three/camera"
 import { createLights } from "../three/light"
-import { createBoxesWithBVH, createBoxesWithInstancedBVH } from "../three/modelLoader"
+import { createBoxesWithBVH } from "../three/modelLoader"
 
 export default function Viewer3({style}:{style?:React.CSSProperties}) {
   const containerRef = useRef<HTMLDivElement>(null)
   const hoveredRef = useRef<THREE.Mesh | null>(null)
   let hovered = hoveredRef.current
-  const hoveredInstaceIdRef = useRef<number | undefined>(undefined)
-  let instanceId = hoveredInstaceIdRef.current
   const raycasterRef = useRef(new THREE.Raycaster())
   const raycaster = raycasterRef.current
   const mouseRef = useRef(new THREE.Vector2(-99,-99))
@@ -21,6 +19,7 @@ export default function Viewer3({style}:{style?:React.CSSProperties}) {
 
 
   useEffect(() => {
+    console.log('Viewer 3 mount')
     if (!containerRef.current) return
     let rafId:number
 
@@ -34,8 +33,8 @@ export default function Viewer3({style}:{style?:React.CSSProperties}) {
     )
 
     const renderer = createRenderer(container)
-    container.appendChild(renderer.domElement)
-
+    if(!container.contains(renderer.domElement))
+      container.appendChild(renderer.domElement)
 
     createLights(scene)
 
@@ -48,7 +47,7 @@ export default function Viewer3({style}:{style?:React.CSSProperties}) {
     controls.enableDamping = true
 
 
-    const boxes = createBoxesWithInstancedBVH(scene, 1000)
+    const boxes = createBoxesWithBVH(scene)
 
 
     function animate() {
@@ -57,24 +56,18 @@ export default function Viewer3({style}:{style?:React.CSSProperties}) {
 
       raycaster.setFromCamera(mouse, camera)
       raycaster.firstHitOnly = true
-      const intersects = raycaster.intersectObject(boxes)
+      const intersects = raycaster.intersectObjects(boxes)
+
+      if (hovered) {
+        (hovered.material as THREE.MeshStandardMaterial).color.set("blue")
+        hovered = null
+      }
 
       if (intersects.length > 0) {
-        const currentInstanceId = intersects[0].instanceId
-        if (hoveredInstaceIdRef.current !== currentInstanceId) {
-          // 이전 객체 초기화
-          if (hoveredInstaceIdRef.current) {
-            // (hoveredInstaceIdRef.current.material as THREE.MeshStandardMaterial).color.set("hotpink");
-          }
-          // 새 객체 설정
-          hoveredInstaceIdRef.current = currentInstanceId;
-          if (currentInstanceId !== undefined) {
-            boxes.setColorAt(currentInstanceId, new THREE.Color("yellow"));
-            if (boxes.instanceColor) boxes.instanceColor.needsUpdate = true;
-          }
-        }
-      } else if (hoveredInstaceIdRef.current) {
-        hoveredInstaceIdRef.current = undefined;
+
+        hovered = intersects[0].object as THREE.Mesh
+
+        ;(hovered.material as THREE.MeshStandardMaterial).color.set("hotpink")
       }
 
       renderer.render(scene, camera)

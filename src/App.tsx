@@ -2,26 +2,53 @@ import React from "react"
 import Viewer from "./components/Viewer"
 import Viewer2 from "./components/Viewer2"
 import Viewer3 from "./components/Viewer3"
+import Viewer3copy from "./components/Viewer3 copy"
 
 function App() {
   const [v, setV] = React.useState('viewer')
-  const handleClick = () => {
-    if(v === 'viewer')
-      setV('viewer2')
-    else if(v === 'viewer2')
-      setV('viewer3')
-    else
-      setV('viewer')
-  }
+
   return <div style={{width:"100vw", height:"100vh", overflow:"hidden"}}>
     {v === 'viewer' && <Viewer />}
     {v === 'viewer2' && <Viewer2 />}
     {v === 'viewer3' && <Viewer3 />}
-    <div style={{cursor:"pointer",position:'absolute', top:"10px", left:'10px', padding:'10px 32px',
-    background:"rgba(222,0,0,0.3)", borderRadius:"4px", border:'1px solid yellow', textAlign:"center", width:"100px", height:"50px"}}
-      onClick={handleClick}
-    >
-      change {v}
+    {v === 'viewer3.1' && <Viewer3copy />}
+    {v === 'viewer4' && <>
+      <Viewer style={{top:"20px", left:"52%", width:"44%",height:"44%",border:"1px solid white"}} />
+      <Viewer style={{position:"absolute",top:"50%", width:"50%",height:"50%",border:"1px solid white"}}/>
+      <Viewer2 style={{top:"-20%", left:"10%", width:"50%",height:"50%",border:"1px solid white"}}/>
+      <Viewer3 style={{position:"absolute", bottom:"1px", right:"1px", width:"50%",height:"50%",border:"1px solid white"}}/>
+    </>}
+    <div style={{position:'absolute', top:"10px", left:'10px', display:'flex', gap:'8px'}}>
+      <div style={{cursor:"pointer", padding:'24px 32px',
+      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      border:v === 'viewer'? '1px solid yellow':'1px solid gray',
+    }}
+        onClick={()=>setV('viewer')}
+      >Scene 1</div>
+      <div style={{cursor:"pointer", padding:'24px 32px',
+      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      border:v === 'viewer2'? '1px solid yellow':'1px solid gray',
+    }}
+        onClick={()=>setV('viewer2')}
+      >Scene 2</div>
+      <div style={{cursor:"pointer", padding:'24px 32px',
+      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      border:v === 'viewer3'? '1px solid yellow':'1px solid gray',
+    }}
+        onClick={()=>setV('viewer3')}
+      >Scene 3</div>
+      <div style={{cursor:"pointer", padding:'24px 32px',
+      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      border:v === 'viewer3.1'? '1px solid yellow':'1px solid gray',
+    }}
+        onClick={()=>setV('viewer3.1')}
+      >Scene 3.1</div>
+      <div style={{cursor:"pointer", padding:'24px 32px',
+      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      border:v === 'viewer4'? '1px solid yellow':'1px solid gray',
+    }}
+        onClick={()=>setV('viewer4')}
+      >Scene 4</div>
     </div>
   </div>
 }

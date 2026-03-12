@@ -6,7 +6,5 @@ export function createRenderer(container: HTMLDivElement) {
   renderer.setSize(container.clientWidth, container.clientHeight)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  container.appendChild(renderer.domElement)
-
   return renderer
 }

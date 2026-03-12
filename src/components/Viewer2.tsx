@@ -8,7 +8,7 @@ import { createCamera } from "../three/camera"
 import { createLights } from "../three/light"
 import { createTestMesh, createInstancedCubes, createManyMeshes, createLOD } from "../three/modelLoader2"
 
-export default function Viewer2() {
+export default function Viewer2({style}:{style?:React.CSSProperties}) {
   const [currentLevel, setCurrentLevel] =useState<number | undefined>()
   const containerRef = useRef<HTMLDivElement>(null)
   const rafId = useRef<number>(null)
@@ -29,6 +29,7 @@ export default function Viewer2() {
     )
 
     const renderer = createRenderer(container)
+    container.appendChild(renderer.domElement)
 
     createLights(scene)
 
@@ -86,14 +87,19 @@ export default function Viewer2() {
     renderer.render(scene, camera)
     animateLOD()
     return () => {
-      cancelAnimationFrame(rafId.current!)
+      if(rafId.current) cancelAnimationFrame(rafId.current)
+      container.removeChild(renderer.domElement)
+
     }
   }, [])
 
   return (
     <div
       ref={containerRef}
-      style={{ width: "100%", height: "100%" }}
+      style={{position:"relative",top:"0px", left:"0px",
+        width: "100%", height: "100%" ,
+        ...style
+      }}
     >
       <div style={{position:"absolute",top:'100px',left:"0px", display:'flex',justifyContent:"center",width:"100%", }}>
         <div style={{background:'linear-gradient(45deg, #7e1616, #171080bf)',borderRadius:'10px', width:'auto', height:'70px', padding:"10px 32px",
