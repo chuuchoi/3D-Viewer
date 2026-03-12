@@ -14,7 +14,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast
 
   const loader = new GLTFLoader()
   loader.load(
-    "/untitled.glb",
+    "./untitled.glb",
     (gltf) => {
       // scene.add(gltf.scene)
       console.log(gltf.scene)
