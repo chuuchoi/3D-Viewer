@@ -17,7 +17,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast
     "./untitled.glb",
     (gltf) => {
       // scene.add(gltf.scene)
-      console.log(gltf.scene)
+      // console.log(gltf.scene)
 
       gltf.scene.traverse((child) => {
         if (child instanceof THREE.Mesh) {
@@ -32,7 +32,7 @@ THREE.Mesh.prototype.raycast = acceleratedRaycast
         }
       })
       
-      console.log(meshes)
+      // console.log(meshes)
       meshes.forEach((mesh) => {
         scene.add(mesh)
       })

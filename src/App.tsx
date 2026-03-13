@@ -19,32 +19,27 @@ function App() {
       <Viewer3 style={{position:"absolute", bottom:"1px", right:"1px", width:"50%",height:"50%",border:"1px solid white"}}/>
     </>}
     <div style={{position:'absolute', top:"10px", left:'10px', display:'flex', gap:'8px'}}>
-      <div style={{cursor:"pointer", padding:'24px 32px',
-      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      <div className='scene-btn' style={{
       border:v === 'viewer'? '1px solid yellow':'1px solid gray',
     }}
         onClick={()=>setV('viewer')}
       >Scene 1</div>
-      <div style={{cursor:"pointer", padding:'24px 32px',
-      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      <div className='scene-btn' style={{
       border:v === 'viewer2'? '1px solid yellow':'1px solid gray',
     }}
         onClick={()=>setV('viewer2')}
       >Scene 2</div>
-      <div style={{cursor:"pointer", padding:'24px 32px',
-      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      <div className='scene-btn' style={{
       border:v === 'viewer3'? '1px solid yellow':'1px solid gray',
     }}
         onClick={()=>setV('viewer3')}
       >Scene 3</div>
-      <div style={{cursor:"pointer", padding:'24px 32px',
-      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      <div className='scene-btn' style={{
       border:v === 'viewer3.1'? '1px solid yellow':'1px solid gray',
     }}
         onClick={()=>setV('viewer3.1')}
       >Scene 3.1</div>
-      <div style={{cursor:"pointer", padding:'24px 32px',
-      background:"rgba(222,0,0,0.3)", borderRadius:"4px", textAlign:"center", width:"100px",
+      <div className='scene-btn' style={{
       border:v === 'viewer4'? '1px solid yellow':'1px solid gray',
     }}
         onClick={()=>setV('viewer4')}

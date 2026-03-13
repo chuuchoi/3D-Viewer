@@ -100,3 +100,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.scene-btn{
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  background-color: rgba(222, 0, 0, 0.3);
+  aspect-ratio: 1 / 1;
+  padding: 24px 32px;
+  width: 100px;
+}
+@media screen and (max-width: 768px) {
+  .scene-btn{
+    padding: 4px 6px;
+    width: 52px;
+    font-size: 14px;
+  }
+}
