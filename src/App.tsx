@@ -4,13 +4,20 @@ import Viewer2 from "@/components/Viewer2"
 import Viewer3 from "@/components/Viewer3"
 import Viewer3copy from "@/components/Viewer3 copy"
 import BoundingBoxIoUComparison from "@/components/GTP/bbiouComparison"
+import AudioVisualizer from "./components/labs/AudioVisualizer"
+import ImageConverter from "./components/labs/ImageConverter"
 
 function App() {
   const [v, setV] = useState('viewer')
 
   return <div style={{width:"100vw", height:"100vh", overflow:"hidden"}}>
     {v === 'viewer' && <Viewer />}
-    {v === 'viewer2' && <Viewer2 />}
+    {v === 'viewer2' && <>
+      <Viewer2 />
+      <AudioVisualizer style={{position:"absolute", top:'0px'}}/>
+      <ImageConverter style={{position:"absolute", top:'0px', right:'0px', width:"30%"}}/>
+    </>
+    }
     {v === 'viewer3' && <Viewer3 />}
     {v === 'viewer3.1' && <Viewer3copy />}
     {v === 'viewer4' && <>
