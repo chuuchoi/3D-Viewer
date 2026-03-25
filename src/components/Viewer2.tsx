@@ -1,11 +1,9 @@
-import React, { useState } from "react"
-import { useEffect, useRef } from "react"
-
-import { createRenderer } from "../three/renderer"
-import { createScene } from "../three/scene"
-import { createCamera } from "../three/camera"
-import { createLights } from "../three/light"
-import { createLOD } from "../three/modelLoader2"
+import { useState, useEffect, useRef } from "react"
+import { createRenderer } from "@/three/renderer"
+import { createScene } from "@/three/scene"
+import { createCamera } from "@/three/camera"
+import { createLights } from "@/three/light"
+import { createLOD } from "@/three/modelLoader2"
 
 export default function Viewer2({style}:{style?:React.CSSProperties}) {
   const [currentLevel, setCurrentLevel] =useState<number | undefined>()

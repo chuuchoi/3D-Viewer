@@ -1,13 +1,12 @@
-import React, { useState } from "react"
-import { useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
-import { createRenderer } from "../three/renderer"
-import { createScene } from "../three/scene"
-import { createCamera } from "../three/camera"
-import { createLights } from "../three/light"
-import { createMeshesWithBVH } from "../three/model"
-import useRafThrottle from "../hooks/useRafThrottle"
+import { createRenderer } from "@/three/renderer"
+import { createScene } from "@/three/scene"
+import { createCamera } from "@/three/camera"
+import { createLights } from "@/three/light"
+import { createMeshesWithBVH } from "@/three/model"
+import useRafThrottle from "@/hooks/useRafThrottle"
 
 export default function Viewer({style}:{style?:React.CSSProperties}) {
   const [mouseP, setMouseP] = useState<{cx:number, cy:number, x:number, y:number}>()

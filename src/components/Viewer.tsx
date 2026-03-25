@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import React, { useEffect, useRef, useState } from "react";
-import useRafThrottle from "../hooks/useRafThrottle";
-import { SceneManager } from "../three/SceneManager";
-import { useViewerInteraction } from "../hooks/useViewerInteraction";
+import { useEffect, useRef, useState } from "react";
+import useRafThrottle from "@/hooks/useRafThrottle";
+import { SceneManager } from "@/three/SceneManager";
+import { useViewerInteraction } from "@/hooks/useViewerInteraction";
 
 export default function Viewer({ style }: { style?: React.CSSProperties }) {
   const containerRef = useRef<HTMLDivElement>(null);

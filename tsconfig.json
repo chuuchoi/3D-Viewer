@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "jsx": "react",
+    "baseUrl": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["*"],
+    },
     "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",

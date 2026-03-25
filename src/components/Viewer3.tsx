@@ -1,12 +1,11 @@
-import React from "react"
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
-import { createRenderer } from "../three/renderer"
-import { createScene } from "../three/scene"
-import { createCamera } from "../three/camera"
-import { createLights } from "../three/light"
-import { createBoxesWithInstancedBVH } from "../three/modelLoader"
+import { createRenderer } from "@/three/renderer"
+import { createScene } from "@/three/scene"
+import { createCamera } from "@/three/camera"
+import { createLights } from "@/three/light"
+import { createBoxesWithInstancedBVH } from "@/three/modelLoader"
 
 export default function Viewer3({style}:{style?:React.CSSProperties}) {
   const containerRef = useRef<HTMLDivElement>(null)
