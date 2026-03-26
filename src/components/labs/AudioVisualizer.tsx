@@ -14,6 +14,7 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [plyaingDelayed, setPlyaingDelayed] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
   const [dashLength, setDashLength] = useState(0);
 
   useLayoutEffect(() => {
@@ -24,6 +25,10 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
     const { clientWidth: w, clientHeight: h } = btnRef.current;
       // 실제 화면 픽셀 기준의 둘레 길이를 계산합니다. border 제외(offsetWidth X)
       setDashLength(2 * (w + h));
+      if(pathRef.current) pathRef.current.style.transition ='';
+      setTimeout(() => {
+        if(pathRef.current) pathRef.current.style.transition ='all 1.2s ease-in-out'
+      }, 1200);
     };
 
     // 1. 초기 계산
@@ -143,7 +148,7 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
   useEffect(() => {
     return () => stopAudio(); // 컴포넌트 언마운트 시 정리
   }, []);
-
+console.log(dashLength)
   return (
     <div style={{...containerStyle, ...style}}>
       <canvas ref={canvasRef} width={800} height={400} style={canvasStyle} />
@@ -159,14 +164,19 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
         style={{position:'absolute', top: '0px', right: '0px', width: '100%', height: '100%'}}
         >
           <path
+            ref={pathRef}
             vectorEffect="non-scaling-stroke" // 선 굵기 왜곡 방지 핵심 속성
-            style={{transition:'all 1.2s ease-in-out',
-              strokeDasharray: dashLength,
-              strokeDashoffset: isPlaying? '0': dashLength,
-              stroke: isPlaying? '#f0fa': 'currentColor',
+            style={{
+              // ...(dashLength &&
+              // {
+                // transition:'all 1.2s ease-in-out',
+                stroke: isPlaying? '#f0fa': 'currentColor',
+                strokeDasharray: dashLength,
+                strokeDashoffset: isPlaying? '0': dashLength
+              // }),
             }}
             d="M0 0 H1 V1 H0 V0 Z" 
-            stroke="currentColor"
+            stroke="transparent"
             strokeWidth={4}
           />
         </svg>
