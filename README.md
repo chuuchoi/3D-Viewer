@@ -1,6 +1,10 @@
 # Three.js 3D Viewer
 <https://chuuchoi.github.io/3D-Viewer/build/>
 
+other study projects:
+- <https://github.com/chuuchoi/sv-dt>
+- <https://github.com/chuuchoi/RustWasm>
+
 3D Rendering Pipeline 이해 및 스터디 목적으로 제작한 **3D 데이터 뷰어 프로젝트**
 
 Three.js의 내부 구조와 WebGL 렌더링 과정을 학습하고, 대규모 데이터를 효율적으로 처리하기 위한 **성능 최적화 기법**을 실험
