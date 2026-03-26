@@ -148,7 +148,7 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
   useEffect(() => {
     return () => stopAudio(); // 컴포넌트 언마운트 시 정리
   }, []);
-console.log(dashLength)
+
   return (
     <div style={{...containerStyle, ...style}}>
       <canvas ref={canvasRef} width={800} height={400} style={canvasStyle} />
