@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import useRafThrottle from "@/hooks/useRafThrottle";
 import { SceneManager } from "@/three/SceneManager";
 import { useViewerInteraction } from "@/hooks/useViewerInteraction";
@@ -88,7 +88,7 @@ const StatusBar = ({ mouseP, selected, hovered, meshes}:
 const Tooltip = ({ name, pos }: { name: string; pos: { cx: number; cy: number; x: number; y: number } }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [positon, setPosition] = useState({ left: pos.cx +4, top: pos.cy + 1})
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     const el = ref.current
     if(!el) return
 

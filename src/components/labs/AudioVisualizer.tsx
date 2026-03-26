@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import vertexShaderSource from './shaders/vertex.glsl?raw';
 import fragmentShaderSource from './shaders/fragment1.glsl?raw';
 
@@ -12,6 +12,38 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
   const audioCtxRef = useRef<AudioContext>(null);
   const streamRef = useRef<MediaStream>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [plyaingDelayed, setPlyaingDelayed] = useState(false);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [dashLength, setDashLength] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!btnRef.current) return;
+
+  const updateLength = () => {
+    if (!btnRef.current) return;
+    const { clientWidth: w, clientHeight: h } = btnRef.current;
+      // 실제 화면 픽셀 기준의 둘레 길이를 계산합니다. border 제외(offsetWidth X)
+      setDashLength(2 * (w + h));
+    };
+
+    // 1. 초기 계산
+    updateLength();
+
+    // 2. ResizeObserver로 버튼 크기가 변할 때마다 갱신
+    const observer = new ResizeObserver(updateLength);
+    if(btnRef.current) observer.observe(btnRef.current); // 부모 SVG 크기 감시
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(()=>{
+    if(isPlaying){
+      setPlyaingDelayed(true)
+    }else{
+      setTimeout(() => {
+        setPlyaingDelayed(false)
+      }, 600);
+    }
+  },[isPlaying])
 
   // --- WebGL 초기화 함수 ---
   const initWebGL = (gl: WebGL2RenderingContext) => {
@@ -116,31 +148,34 @@ const AudioVisualizer = ({ style }: AudioVisualizerProps) => {
     <div style={{...containerStyle, ...style}}>
       <canvas ref={canvasRef} width={800} height={400} style={canvasStyle} />
       
-      <button 
+      <button
+        ref={btnRef}
         onClick={isPlaying ? stopAudio : startAudio}
-        style={{ position:'relative', display: 'flex', alignItems:'center', justifyContent: 'center', gap: '4px', backgroundColor: isPlaying ? '' : '#444'}}
+        className='stabtn'
+        style={{backgroundColor:plyaingDelayed?'#111':''}}
       >
-        <svg width="100%" height="100%" viewBox="0 0 16 4" fill="none" xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
+        <svg width="100%" height="100%" viewBox="0 0 1 1" fill="none" xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none" // 비율 무시하고 꽉 채움
         style={{position:'absolute', top: '0px', right: '0px', width: '100%', height: '100%'}}
         >
           <path
-            style={{transition:'all 0.8s ease-in-out, fill 0.8s ease-in-out 0.5s',
-              strokeDasharray: '123',
-              strokeDashoffset: isPlaying? '0': '123',
+            vectorEffect="non-scaling-stroke" // 선 굵기 왜곡 방지 핵심 속성
+            style={{transition:'all 1.2s ease-in-out',
+              strokeDasharray: dashLength,
+              strokeDashoffset: isPlaying? '0': dashLength,
               stroke: isPlaying? '#f0fa': 'currentColor',
             }}
-            d="M0 0 H16 V4 H0 V0 Z" 
+            d="M0 0 H1 V1 H0 V0 Z" 
             stroke="currentColor"
-            strokeWidth={0.2}
+            strokeWidth={4}
           />
         </svg>
 
         <svg width="32" height="32" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            style={{transition:'all 0.8s ease-in-out, fill 0.8s ease-in-out 0.5s',
-              strokeDasharray: '123',
-              strokeDashoffset: isPlaying? '0': '123',
+            style={{transition:'all 1.2s ease-in-out, fill 1.2s ease-in-out 0.6s',
+              strokeDasharray: '50',
+              strokeDashoffset: isPlaying? '0': '50',
               fill: isPlaying? '#fff2': 'currentColor',
               stroke: isPlaying? '#f0fa': 'currentColor',
             }}
